@@ -1,0 +1,77 @@
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from ..database import get_db
+from ..models import User
+from ..schemas import (
+    AuthResponse,
+    ForgotPasswordRequest,
+    LoginRequest,
+    RegisterRequest,
+    UserOut,
+)
+from ..security import (
+    create_access_token,
+    get_current_user,
+    hash_password,
+    verify_password,
+)
+
+router = APIRouter(prefix="/auth", tags=["auth"])
+
+
+@router.post(
+    "/register",
+    response_model=AuthResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+def register(body: RegisterRequest, db: Session = Depends(get_db)):
+    email = body.email.lower()
+    exists = db.scalar(select(User).where(User.email == email))
+    if exists:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="An account with this email already exists",
+        )
+
+    user = User(
+        name=body.name.strip(),
+        email=email,
+        hashed_password=hash_password(body.password),
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    return AuthResponse(
+        access_token=create_access_token(user.id),
+        user=UserOut.model_validate(user),
+    )
+
+
+@router.post("/login", response_model=AuthResponse)
+def login(body: LoginRequest, db: Session = Depends(get_db)):
+    user = db.scalar(select(User).where(User.email == body.email.lower()))
+    if user is None or not verify_password(body.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+        )
+    return AuthResponse(
+        access_token=create_access_token(user.id),
+        user=UserOut.model_validate(user),
+    )
+
+
+@router.post("/forgot-password", status_code=status.HTTP_202_ACCEPTED)
+def forgot_password(body: ForgotPasswordRequest):
+    # Phase 2: generate a reset token and send it by email.
+    # Always return the same response so the endpoint can't be used
+    # to discover which emails are registered.
+    return {"detail": "If that account exists, a reset link has been sent."}
+
+
+@router.get("/me", response_model=UserOut)
+def me(current_user: User = Depends(get_current_user)):
+    return current_user

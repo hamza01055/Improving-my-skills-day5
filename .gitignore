@@ -1,0 +1,64 @@
+# Flutter
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+build/
+.flutter-plugins
+.generated/
+*.lock
+*.log
+*.flutter-plugins
+*.flutter-plugins-dependencies
+
+# Android
+/android/app/debug.keystore
+/android/local.properties
+
+# iOS
+/ios/Flutter/Flutter.framework
+/ios/Flutter/Flutter.podspec
+/ios/Pods/
+/ios/Runner.xcworkspace/
+/ios/Flutter/Flutter.framework
+/ios/ServiceDefinitions.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+ENV/
+.venv/
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+pip-wheel-metadata/
+
+# Environment files
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# JetBrains
+*.iml
+.idea/
+
+# Temporary files
+*.swp
+*.swo
+*~
+
+# SQLite
+*.sqlite3
+*.db
+*.sqlite
