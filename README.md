@@ -1,6 +1,6 @@
 <div align="center">
 
-# IntelliVault — Your AI Second Brain
+# IntelliVault — Your AI Second Brain 
 
 [![Flutter](https://img.shields.io/badge/Flutter-Material%203-02569B?style=flat-square&logo=flutter)](https://flutter.dev/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Python-009688?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com/)
