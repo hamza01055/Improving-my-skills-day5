@@ -7,8 +7,15 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
+import '../../features/auth/presentation/screens/voice_intro_screen.dart';
 import '../../features/auth/providers/auth_provider.dart';
-import '../../features/home/presentation/home_screen.dart';
+import '../../features/chat/presentation/screens/chat_home_screen.dart';
+import '../../features/chat/presentation/screens/chat_screen.dart';
+import '../../features/documents/presentation/screens/documents_screen.dart';
+import '../../features/notes/presentation/screens/notes_screen.dart';
+import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/tasks/presentation/screens/tasks_screen.dart';
+import '../../features/voice/presentation/screens/voice_screen.dart';
 import '../services/local_storage_service.dart';
 import 'route_names.dart';
 
@@ -27,6 +34,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     RouteNames.register,
     RouteNames.forgotPassword,
     RouteNames.onboarding,
+    RouteNames.onboardingAbout,
   };
 
   return GoRouter(
@@ -62,6 +70,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: RouteNames.onboarding,
+        builder: (context, state) => const VoiceIntroScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.onboardingAbout,
         builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
@@ -78,7 +90,31 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: RouteNames.home,
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) => const ChatHomeScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.chat,
+        builder: (context, state) => const ChatScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.notes,
+        builder: (context, state) => const NotesScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.tasks,
+        builder: (context, state) => const TasksScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.documents,
+        builder: (context, state) => const DocumentsScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.voice,
+        builder: (context, state) => const VoiceScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.settings,
+        builder: (context, state) => const SettingsScreen(),
       ),
     ],
   );

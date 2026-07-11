@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/validators.dart';
-import '../../../../core/widgets/app_text_field.dart';
-import '../../../../core/widgets/primary_button.dart';
+import '../../../../core/widgets/pill_field.dart';
 import '../../providers/auth_provider.dart';
 import '../widgets/auth_scaffold.dart';
 
@@ -43,12 +43,12 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
 
     if (_sent) {
       return AuthScaffold(
-        title: 'Check your email',
+        title: 'Check email',
         subtitle:
             'If an account exists for ${_email.text.trim()}, a reset link is on its way.',
         children: [
-          PrimaryButton(
-            label: 'Back to sign in',
+          PillButton(
+            label: 'BACK TO SIGN IN',
             onPressed: () => context.pop(),
           ),
         ],
@@ -64,24 +64,29 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              AppTextField(
+              PillField(
                 controller: _email,
-                label: 'Email',
-                hint: 'you@example.com',
-                prefixIcon: Icons.alternate_email,
+                hint: 'Email',
+                icon: Icons.alternate_email,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.done,
                 validator: Validators.email,
               ),
-              const SizedBox(height: 24),
-              PrimaryButton(
-                label: 'Send reset link',
+              const SizedBox(height: 32),
+              PillButton(
+                label: 'SEND RESET LINK',
                 isLoading: auth.isLoading,
                 onPressed: _submit,
               ),
-              TextButton(
-                onPressed: () => context.pop(),
-                child: const Text('Back to sign in'),
+              const SizedBox(height: 16),
+              Center(
+                child: TextButton(
+                  onPressed: () => context.pop(),
+                  child: const Text(
+                    'Back to sign in',
+                    style: TextStyle(color: AppColors.navy),
+                  ),
+                ),
               ),
             ],
           ),

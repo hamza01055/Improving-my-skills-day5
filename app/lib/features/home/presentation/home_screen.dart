@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../core/routes/route_names.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/glass_card.dart';
 import '../../../core/widgets/gradient_background.dart';
 import '../../auth/providers/auth_provider.dart';
 
 class _Feature {
-  const _Feature(this.icon, this.title, this.subtitle, this.phase);
+  const _Feature(this.icon, this.title, this.subtitle, this.route);
   final IconData icon;
   final String title;
   final String subtitle;
-  final int phase;
+  final String route;
 }
 
 const _features = [
   _Feature(Icons.chat_bubble_outline, 'AI Chat',
-      'Ask anything, get grounded answers', 2),
+      'Ask anything, get grounded answers', RouteNames.chat),
   _Feature(Icons.description_outlined, 'Documents',
-      'Upload files, chat with them', 3),
+      'Upload files, chat with them', RouteNames.documents),
   _Feature(Icons.edit_note_outlined, 'Notes',
-      'Capture, rewrite, summarize', 3),
+      'Capture, rewrite, summarize', RouteNames.notes),
   _Feature(Icons.check_circle_outline, 'Tasks',
-      'AI-prioritized to-dos', 3),
+      'AI-prioritized to-dos', RouteNames.tasks),
   _Feature(Icons.mic_none_outlined, 'Voice',
-      'Speak to your second brain', 4),
+      'Speak to your second brain', RouteNames.voice),
   _Feature(Icons.settings_outlined, 'Settings',
-      'Theme, account, and more', 4),
+      'Theme, account, and more', RouteNames.settings),
 ];
 
 class HomeScreen extends ConsumerWidget {
@@ -112,14 +114,7 @@ class HomeScreen extends ConsumerWidget {
                   children: [
                     for (final (i, f) in _features.indexed)
                       GlassCard(
-                        onTap: () {
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(SnackBar(
-                              content: Text(
-                                  '${f.title} arrives in Phase ${f.phase}'),
-                            ));
-                        },
+                        onTap: () => context.push(f.route),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

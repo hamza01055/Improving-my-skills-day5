@@ -1,6 +1,6 @@
 {
-    "name": "ai_second_brain",
-    "short_name": "ai_second_brain",
+    "name": "IntelliVault",
+    "short_name": "IntelliVault",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

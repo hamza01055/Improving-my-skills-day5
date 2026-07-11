@@ -18,4 +18,10 @@ class LocalStorageService {
 
   static Future<void> completeOnboarding() =>
       _settings.put(StorageKeys.hasSeenOnboarding, true);
+
+  static String get themeMode =>
+      _settings.get(StorageKeys.themeMode, defaultValue: 'system') as String;
+
+  static Future<void> setThemeMode(String mode) =>
+      _settings.put(StorageKeys.themeMode, mode);
 }

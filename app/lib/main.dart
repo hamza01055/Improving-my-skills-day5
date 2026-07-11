@@ -11,5 +11,5 @@ Future<void> main() async {
   await Hive.initFlutter();
   await LocalStorageService.init();
 
-  runApp(const ProviderScope(child: SecondBrainApp()));
+  runApp(const ProviderScope(child: IntelliVaultApp()));
 }

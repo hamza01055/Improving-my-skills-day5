@@ -1,5 +1,5 @@
-name: ai_second_brain
-description: AI-powered second brain — chat with documents, notes, tasks, and voice.
+name: intellivault
+description: IntelliVault — chat with documents, notes, tasks, and voice.
 publish_to: "none"
 version: 0.1.0+1
 
@@ -28,10 +28,22 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_animate: ^4.5.0
 
+  # Documents
+  file_picker: ^8.1.2
+
+  # Chat rendering
+  flutter_markdown_plus: ^1.0.3
+  markdown: ^7.3.1
+  flutter_highlight: ^0.7.0
+  highlight: ^0.7.0
+
+  # Voice
+  speech_to_text: ^7.0.0
+
   # NOTE: Phase 2+ dependencies (add when the feature lands, keep pubspec lean):
-  # flutter_markdown, cached_network_image  -> AI Chat
-  # file_picker, image_picker              -> Documents
-  # speech_to_text, flutter_tts            -> Voice Assistant
+  # cached_network_image                    -> AI Chat
+  # image_picker                            -> Documents (camera capture)
+  # flutter_tts                             -> Voice Assistant (text-to-speech replies)
   # firebase_core, firebase_auth,
   # google_sign_in                          -> Google login (run `flutterfire configure`)
   # lottie                                  -> Onboarding illustrations

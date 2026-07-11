@@ -2,15 +2,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .database import Base, engine
-from .routers import auth
+from .routers import auth, chat, documents, notes, tasks
 
 # Phase 1: create tables on startup. Later phases switch to Alembic migrations.
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="AI Second Brain API",
+    title="IntelliVault API",
     version="0.1.0",
-    description="Backend for the AI Second Brain app. Phase 1: authentication.",
+    description="Backend for the IntelliVault app.",
 )
 
 app.add_middleware(
@@ -21,6 +21,10 @@ app.add_middleware(
 )
 
 app.include_router(auth.router)
+app.include_router(notes.router)
+app.include_router(tasks.router)
+app.include_router(chat.router)
+app.include_router(documents.router)
 
 
 @app.get("/health", tags=["meta"])

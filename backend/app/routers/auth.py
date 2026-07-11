@@ -8,13 +8,18 @@ from ..schemas import (
     AuthResponse,
     ForgotPasswordRequest,
     LoginRequest,
+    LogoutRequest,
+    RefreshRequest,
     RegisterRequest,
     UserOut,
 )
 from ..security import (
     create_access_token,
+    create_refresh_token,
     get_current_user,
     hash_password,
+    revoke_refresh_token,
+    verify_and_rotate_refresh_token,
     verify_password,
 )
 
@@ -46,6 +51,7 @@ def register(body: RegisterRequest, db: Session = Depends(get_db)):
 
     return AuthResponse(
         access_token=create_access_token(user.id),
+        refresh_token=create_refresh_token(user.id, db),
         user=UserOut.model_validate(user),
     )
 
@@ -60,8 +66,26 @@ def login(body: LoginRequest, db: Session = Depends(get_db)):
         )
     return AuthResponse(
         access_token=create_access_token(user.id),
+        refresh_token=create_refresh_token(user.id, db),
         user=UserOut.model_validate(user),
     )
+
+
+@router.post("/refresh", response_model=AuthResponse)
+def refresh(body: RefreshRequest, db: Session = Depends(get_db)):
+    access_token, refresh_token, user = verify_and_rotate_refresh_token(
+        body.refresh_token, db
+    )
+    return AuthResponse(
+        access_token=access_token,
+        refresh_token=refresh_token,
+        user=UserOut.model_validate(user),
+    )
+
+
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+def logout(body: LogoutRequest, db: Session = Depends(get_db)):
+    revoke_refresh_token(body.refresh_token, db)
 
 
 @router.post("/forgot-password", status_code=status.HTTP_202_ACCEPTED)

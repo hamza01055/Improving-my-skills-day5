@@ -34,7 +34,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               width: 88,
               height: 88,
               decoration: BoxDecoration(
-                gradient: AppColors.brandGradient,
+                color: AppColors.navy,
                 borderRadius: BorderRadius.circular(24),
               ),
               child: const Icon(Icons.psychology_outlined,

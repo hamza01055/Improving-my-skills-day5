@@ -84,7 +84,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           width: 120,
                           height: 120,
                           decoration: const BoxDecoration(
-                            gradient: AppColors.brandGradient,
+                            color: AppColors.navy,
                             shape: BoxShape.circle,
                           ),
                           child:
@@ -121,8 +121,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   height: 8,
                   decoration: BoxDecoration(
                     color: _index == i
-                        ? AppColors.primary
-                        : AppColors.primary.withValues(alpha: 0.25),
+                        ? AppColors.navy
+                        : AppColors.navy.withValues(alpha: 0.25),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 );

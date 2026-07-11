@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/services/api_client.dart';
 import '../data/auth_repository.dart';
 import '../data/models/user_model.dart';
 
@@ -40,7 +41,14 @@ class AuthNotifier extends Notifier<AuthState> {
   AuthRepository get _repo => ref.read(authRepositoryProvider);
 
   @override
-  AuthState build() => const AuthState();
+  AuthState build() {
+    // If the interceptor's refresh attempt fails, force the session back
+    // to unauthenticated — the router's redirect reacts automatically.
+    ref.read(apiClientProvider).onSessionExpired = () {
+      state = const AuthState(status: AuthStatus.unauthenticated);
+    };
+    return const AuthState();
+  }
 
   /// Called once from the splash screen.
   Future<void> restoreSession() async {

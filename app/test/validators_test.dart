@@ -1,4 +1,4 @@
-import 'package:ai_second_brain/core/utils/validators.dart';
+import 'package:intellivault/core/utils/validators.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

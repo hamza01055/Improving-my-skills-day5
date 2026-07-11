@@ -6,6 +6,7 @@ class AppColors {
 
   static const Color primary = Color(0xFF6C4DF6); // violet
   static const Color secondary = Color(0xFF2E8BFF); // blue
+  static const Color navy = Color(0xFF1A2A80); // auth screens accent
 
   static const LinearGradient brandGradient = LinearGradient(
     begin: Alignment.topLeft,

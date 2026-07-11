@@ -30,6 +30,7 @@ class AuthRepository {
     );
     final auth = AuthResponse.fromJson(res.data as Map<String, dynamic>);
     await _storage.saveToken(auth.accessToken);
+    await _storage.saveRefreshToken(auth.refreshToken);
     return auth.user;
   }
 
@@ -44,6 +45,7 @@ class AuthRepository {
     );
     final auth = AuthResponse.fromJson(res.data as Map<String, dynamic>);
     await _storage.saveToken(auth.accessToken);
+    await _storage.saveRefreshToken(auth.refreshToken);
     return auth.user;
   }
 
@@ -64,5 +66,20 @@ class AuthRepository {
     }
   }
 
-  Future<void> logout() => _storage.clear();
+  /// Best-effort server-side revocation, then always clears local storage
+  /// (so logout succeeds even when offline or the access token expired).
+  Future<void> logout() async {
+    final String? refreshToken = await _storage.readRefreshToken();
+    if (refreshToken != null) {
+      try {
+        await _api.post(
+          ApiEndpoints.logout,
+          data: {'refresh_token': refreshToken},
+        );
+      } catch (_) {
+        // Ignore — offline/expired logout should still clear the session.
+      }
+    }
+    await _storage.clear();
+  }
 }
